@@ -1,260 +1,78 @@
-/* =========================
-   Modern Futuristic Blue
-   style.css
-   ========================= */
-
-:root{
-  --bg-dark:#07111a;
-  --glass: rgba(255,255,255,0.04);
-  --glass-2: rgba(255,255,255,0.02);
-  --accent: #00d0ff;         /* cyan */
-  --accent-2: #2bb7ff;
-  --muted: rgba(255,255,255,0.65);
-  --card-border: rgba(43,183,255,0.12);
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: url("assets/bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
 }
 
-/* Page reset */
-*{box-sizing:border-box}
-html,body{height:100%;}
-body{
-  margin:0;
-  font-family: 'Rajdhani', sans-serif;
-  background:
-    radial-gradient(circle at 10% 20%, rgba(0,208,255,0.06), transparent 12%),
-    radial-gradient(circle at 90% 80%, rgba(43,183,255,0.04), transparent 15%),
-    linear-gradient(180deg, rgba(3,12,20,1) 0%, rgba(7,17,26,1) 100%);
-  color: #eaf6ff;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  transition: background 0.4s ease;
-  min-height:100vh;
-  padding-left:0;
-  padding-top:0;
+/* Sidebar Button */
+.menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #ff0055;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 25px;
+    box-shadow: 0 0 20px #ff0055;
+    z-index: 1000;
 }
 
-/* decorative grid lines (subtle) */
-body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background-image:
-    linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px),
-    linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);
-  background-size: 120px 120px, 120px 120px;
-  pointer-events:none;
-  opacity:0.18;
+/* Sidebar */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 260px;
+    height: 100vh;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: 0.4s;
 }
 
-/* ===== Menu Button (floating circular neon) ===== */
-.menu-btn{
-  position:fixed;
-  top:22px;
-  left:20px;
-  width:54px;
-  height:54px;
-  border-radius:50%;
-  border:none;
-  background: linear-gradient(135deg, rgba(0,208,255,1), rgba(43,183,255,0.9));
-  color:#001018;
-  font-size:22px;
-  font-weight:700;
-  box-shadow: 0 6px 30px rgba(0,208,255,0.14), 0 2px 8px rgba(0,0,0,0.5);
-  cursor:pointer;
-  z-index:2000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.side-menu a {
+    color: white;
+    font-size: 22px;
+    padding: 12px 25px;
+    text-decoration: none;
+    transition: 0.3s;
 }
 
-/* when sidebar open, add page blur class */
-body.sidebar-open{
-  filter: blur(0.6px) brightness(0.98);
+.side-menu a:hover {
+    background: #ff0055;
+    border-radius: 10px;
 }
 
-/* ===== Sidebar ===== */
-.sidebar{
-  position:fixed;
-  left:-320px;
-  top:0;
-  width:300px;
-  height:100%;
-  background: linear-gradient(180deg, rgba(4,14,20,0.85), rgba(2,8,12,0.6));
-  border-right:1px solid var(--card-border);
-  box-shadow: 8px 0 60px rgba(0,0,0,0.6);
-  padding:18px 18px;
-  transition: all 0.42s cubic-bezier(.2,.9,.2,1);
-  backdrop-filter: blur(8px) saturate(120%);
-  z-index:1999;
+.side-menu.open {
+    left: 0;
 }
 
-/* open state (left fade + blur) */
-.sidebar.open{
-  left:0;
-  transform: translateX(0);
-  opacity:1;
+/* Center Content */
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    width: 100%;
 }
 
-/* sidebar header */
-.sidebar-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding-bottom:12px;
-  border-bottom:1px solid rgba(255,255,255,0.03);
+.title {
+    font-size: 50px;
+    text-shadow: 0 0 20px #ff00aa;
+    margin-bottom: 40px;
 }
 
-/* small circular logo */
-.logo{
-  width:56px;
-  height:56px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:800;
-  color:#001018;
-  background:linear-gradient(135deg,var(--accent), var(--accent-2));
-  box-shadow: 0 6px 18px rgba(0,208,255,0.12);
-  font-family: 'Orbitron', sans-serif;
-  font-size:20px;
+/* Google Button Wrapper Fix */
+.g_id_signin {
+    display: inline-block;
 }
-
-/* close button */
-.close{
-  cursor:pointer;
-  color:var(--muted);
-  font-size:18px;
-}
-
-/* nav */
-.nav{ margin-top:22px; display:flex; flex-direction:column; gap:6px; }
-.nav-link{
-  color: white;
-  text-decoration:none;
-  padding:12px 14px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-  transition: all .18s ease;
-}
-.nav-link:hover{
-  background: linear-gradient(90deg, rgba(0,208,255,0.06), rgba(43,183,255,0.03));
-  box-shadow: inset 0 0 18px rgba(0,208,255,0.04);
-  transform: translateX(6px);
-}
-
-/* sidebar footer */
-.sidebar-footer{ margin-top:auto; color:var(--muted); font-size:13px; padding-top:10px; }
-
-/* ===== Main content area ===== */
-main#main{
-  margin-left:0;
-  padding:28px;
-  transition: margin-left .42s ease;
-  min-height:100vh;
-}
-
-/* when sidebar open, shift main a little (desktop) */
-@media(min-width:900px){
-  .sidebar.open ~ #main{ margin-left:320px; }
-}
-
-/* center-screen for login */
-.center-screen{
-  min-height:calc(100vh - 0px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* glass card */
-.glass-card{
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border: 1px solid rgba(43,183,255,0.08);
-  padding:18px;
-  border-radius:12px;
-  box-shadow: 0 6px 30px rgba(8,20,28,0.6);
-  margin:12px 0;
-}
-
-/* small variant */
-.glass-card.small{ padding:12px; }
-
-/* buttons */
-.btn{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 14px;
-  border-radius:10px;
-  border: none;
-  cursor:pointer;
-  font-weight:700;
-}
-.btn-primary{
-  background: linear-gradient(90deg,var(--accent), var(--accent-2));
-  color:#001018;
-  box-shadow: 0 8px 30px rgba(0,208,255,0.14);
-}
-.btn-ghost{
-  background: transparent;
-  color: var(--accent-2);
-  border:1px solid rgba(43,183,255,0.12);
-}
-
-/* brand */
-.brand{
-  font-family: 'Orbitron', sans-serif;
-  font-size:36px;
-  margin:0;
-  letter-spacing:1px;
-  color: #e7fbff;
-  text-shadow: 0 8px 40px rgba(0,208,255,0.06);
-}
-.muted{ color:var(--muted); font-size:14px; }
-
-/* page structure */
-.page{ display:none; }
-.page.active{ display:block; }
-
-/* titles */
-.page-title{
-  font-family: 'Orbitron', sans-serif;
-  font-size:28px;
-  margin:6px 0 12px;
-}
-
-/* grid layout */
-.grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap:14px;
-  align-items:start;
-}
-
-/* list container (matches) */
-.list{ display:flex; flex-direction:column; gap:12px; }
-
-/* tournament card */
-.t-title{ font-weight:800; font-size:18px; color:#e9fbff; }
-.t-meta{ color:var(--muted); font-size:13px; margin-top:6px; }
-
-.card-empty{
-  padding:18px; border-radius:10px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));
-  border:1px dashed rgba(255,255,255,0.03);
-  color:var(--muted);
-}
-
-/* small responsive tweaks */
-@media(max-width:800px){
-  .menu-btn{ left:14px; top:14px; }
-  .sidebar{ width:86%; max-width:360px; }
-  .sidebar.open ~ #main{ margin-left:0; } /* don't shift on small screens */
-  main#main{ padding:18px; }
-}
-
-/* subtle hover effect for cards */
-.glass-card:hover{ transform: translateY(-4px); transition: all .18s ease; }
-
-/* played list small style */
-.played-item{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding:12px; border-radius:8px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); border:1px solid rgba(255,255,255,0.02); }
