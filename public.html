@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Player Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Player Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="firebase.js"></script>
 </head>
-<body class="bg">
+<body style="background:#f0f0f0;">
 
-  <h1 class="white">Welcome Player!</h1>
+<h1>Welcome Player</h1>
+<button onclick="logout()">Logout</button>
 
-  <button id="logoutBtn" class="logout">Logout</button>
-
-  <script type="module">
-    import { auth, getUserRole } from "./firebase.js";
-    import { onAuthStateChanged, signOut } 
-    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) return window.location.href = "login.html";
-
-      const role = await getUserRole(user.uid);
-
-      if (role !== "player") {
-        return window.location.href = "login.html";
-      }
+<script>
+function logout() {
+    firebase.auth().signOut().then(() => {
+        localStorage.removeItem("user");
+        window.location.href = "index.html";
     });
+}
 
-    document.getElementById("logoutBtn").onclick = () => {
-      signOut(auth);
-    };
-  </script>
+firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+        window.location.href = "index.html";
+    }
+});
+</script>
 
 </body>
 </html>
