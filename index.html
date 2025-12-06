@@ -1,51 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<style>
     body {
-      margin: 0;
-      font-family: Arial;
-      background: url("bg.jpg") no-repeat center center fixed;
-      background-size: cover;
+        margin: 0;
+        padding: 0;
+        background: url("bg.png") no-repeat center center fixed;
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        color: white;
     }
     .box {
-      width: 300px;
-      padding: 20px;
-      background: white;
-      margin: 100px auto;
-      border-radius: 10px;
-      text-align: center;
+        width: 320px;
+        margin: 140px auto;
+        padding: 25px;
+        background: rgba(0,0,0,0.65);
+        border-radius: 10px;
+        text-align: center;
     }
     input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
+        width: 90%;
+        padding: 12px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        font-size: 15px;
     }
     button {
-      padding: 10px;
-      width: 100%;
-      background: #007bff;
-      color: white;
-      border: none;
+        width: 95%;
+        padding: 12px;
+        border: none;
+        background: #28a745;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
     }
-  </style>
+</style>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
 </head>
-
 <body>
-  <div class="box">
+
+<div class="box">
     <h2>Login</h2>
-    <input id="email" type="email" placeholder="Email">
-    <input id="pass" type="password" placeholder="Password">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
     <button onclick="login()">Login</button>
-  </div>
+</div>
 
 <script>
+// YOUR FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyD66aIVOTVco6rTtpVinkl64UZGnZDgn1o",
   authDomain: "firezone-elite.firebaseapp.com",
@@ -58,31 +71,19 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-function login(){
-  let email = document.getElementById("email").value;
-  let pass = document.getElementById("pass").value;
+function login() {
+    let email = document.getElementById("email").value;
+    let pass = document.getElementById("password").value;
 
-  firebase.auth().signInWithEmailAndPassword(email, pass)
-  .then(res => {
-      let uid = res.user.uid;
-
-      firebase.database().ref("users/" + uid).once("value", snap => {
-          let role = snap.val()?.role;
-
-          if(role === "admin"){
-             window.location.href = "https://your-admin-repo-url.github.io/";
-          }
-          else{
-             window.location.href = "https://your-public-repo-url.github.io/";
-          }
-      });
-  })
-  .catch(e => alert(e.message));
+    auth.signInWithEmailAndPassword(email, pass)
+    .then(() => {
+        window.location.href = "public.html";   // redirect after login
+    })
+    .catch(err => alert(err.message));
 }
 </script>
 
 </body>
 </html>
-
-
