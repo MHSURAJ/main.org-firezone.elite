@@ -1,31 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Player Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="firebase.js"></script>
+    <title>FireZone Elite - Player Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0c0020, #1b0045, #29006e);
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: rgba(0,0,0,0.4);
+            position: fixed;
+            padding-top: 40px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px 20px;
+            font-size: 18px;
+            color: #ddd;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .content {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        .match-card {
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #00aaff;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+    </style>
 </head>
-<body style="background:#f0f0f0;">
 
-<h1>Welcome Player</h1>
-<button onclick="logout()">Logout</button>
+<body>
 
-<script>
-function logout() {
-    firebase.auth().signOut().then(() => {
-        localStorage.removeItem("user");
-        window.location.href = "index.html";
-    });
-}
+<div class="sidebar">
+    <a onclick="showSection('all')">All Matches</a>
+    <a onclick="showSection('joined')">Joined / Played</a>
+    <a onclick="showSection('contact')">Contact Us</a>
+</div>
 
-firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-        window.location.href = "index.html";
-    }
-});
-</script>
+<div class="content" id="mainContent">
+    <h2>Loading Matches...</h2>
+</div>
+
+<script type="module" src="public.js"></script>
 
 </body>
 </html>
