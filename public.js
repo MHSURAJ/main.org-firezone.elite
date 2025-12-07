@@ -1,3 +1,7 @@
+if(localStorage.getItem("userType") !== "player"){
+    alert("Unauthorized! Please login as player.");
+    window.location.href = "login.html";
+}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { 
     getAuth, onAuthStateChanged 
