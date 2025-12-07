@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
             return;
         }
 
-        // For demo: just show alert (replace with email API like EmailJS or Firebase)
         alert(`Message sent!\nName: ${name}\nEmail: ${email}\nMessage: ${msg}`);
 
         // Clear form
