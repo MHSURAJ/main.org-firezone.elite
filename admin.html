@@ -1,102 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="admin.css">
-
-  <style>
-    body { font-family: Arial; margin: 0; padding: 0; background: #f5f5f5; }
-
-    .header {
-        padding: 15px;
-        background: #111;
-        color: #fff;
-        text-align: center;
-        font-size: 22px;
-    }
-
-    .container {
-        padding: 20px;
-        max-width: 900px;
-        margin: auto;
-    }
-
-    .match-card {
-        background: white;
-        padding: 15px;
-        margin-bottom: 15px;
-        border-radius: 10px;
-        box-shadow: 0 0 5px #0002;
-    }
-
-    .match-card button { margin-right: 10px; }
-
-    /* MODAL */
-    #matchModal {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: #0007;
-        display: none;
-        justify-content: center;
-        align-items: center;
-    }
-
-    #modalContent {
-        width: 400px;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-    }
-
-    #modalContent input {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 12px;
-    }
-
-    #modalContent button { width: 48%; padding: 10px; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FireZone Elite - Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css" />
 </head>
 
 <body>
-
-<div class="header">Admin Dashboard</div>
-
-<div class="container">
-
-  <button id="addMatchBtn">+ Add Match</button>
-
-  <h2>Matches</h2>
-  <div id="matchesList"></div>
-
-</div>
-
-<!-- MODAL -->
-<div id="matchModal">
-  <div id="modalContent">
-      <h2 id="modalTitle">Add Match</h2>
-
-      <input id="m_name" placeholder="Match Name">
-      <input id="m_id" placeholder="Match ID">
-      <input id="m_fee" placeholder="Entry Fee">
-      <input id="m_prize" placeholder="Prize">
-      <input id="m_date" type="date">
-      <input id="m_time" type="time">
-      <input id="m_players" placeholder="Total Players">
-
-      <input id="m_roomId" placeholder="Room ID (secret)">
-      <input id="m_roomPass" placeholder="Room Password (secret)">
-
-      <div style="display:flex; justify-content:space-between;">
-        <button id="saveMatchBtn">Save</button>
-        <button id="closeModalBtn">Cancel</button>
-      </div>
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+      <li onclick="showSection('matches')">Matches</li>
+      <li onclick="showSection('players')">Players</li>
+      <li onclick="logout()">Logout</li>
+    </ul>
   </div>
-</div>
 
-<script src="admin.js"></script>
+  <div class="main">
+    <div id="matches" class="section">
+      <h2>Manage Matches</h2>
+      <button class="add-btn" onclick="openMatchPopup()">+ Add Match</button>
 
+      <div id="matchList" class="match-list"></div>
+    </div>
+
+    <div id="players" class="section" style="display:none;">
+      <h2>Player Approvals</h2>
+      <div id="playerList"></div>
+    </div>
+  </div>
+
+  <!-- POPUP CARD UI -->
+  <div id="popupOverlay" class="overlay">
+    <div class="popup">
+      <h2 id="popupTitle">Add Match</h2>
+
+      <label>Match Name</label>
+      <input id="matchName">
+
+      <label>Match ID</label>
+      <input id="matchId">
+
+      <label>Entry Fee</label>
+      <input id="entryFee">
+
+      <label>Prize</label>
+      <input id="prize">
+
+      <label>Date</label>
+      <input type="date" id="date">
+
+      <label>Time</label>
+      <input type="time" id="time">
+
+      <label>Room ID (Only verified players will see)</label>
+      <input id="roomId">
+
+      <label>Password (Only verified players will see)</label>
+      <input id="password">
+
+      <button class="save-btn" onclick="saveMatch()">Save</button>
+      <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
 </body>
 </html>
