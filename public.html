@@ -9,101 +9,60 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="firebase.js"></script>
 <style>
-/* Body and background */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: url('assets/bg.png') no-repeat center center fixed; /* bg.png directly use ho raha */
+    margin:0;
+    font-family: Arial,sans-serif;
+    background: url('assets/bg.png') no-repeat center center fixed;
     background-size: cover;
-    color: #222; /* text readable */
+    color: #222;
     overflow-x: hidden;
 }
 
-.container {
-    display: flex;
-    min-height: 100vh;
-}
+.container { display: flex; min-height:100vh; }
 
-/* Sidebar */
 .sidebar {
     width: 220px;
-    background-color: rgba(34,34,34,0.95); /* semi-transparent dark */
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
+    background-color: rgba(34,34,34,0.95);
+    color:white;
+    display:flex;
+    flex-direction:column;
+    padding:20px;
     position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
+    top:0; left:0; bottom:0;
     box-shadow: 2px 0 5px rgba(0,0,0,0.3);
-    z-index: 1000;
+    z-index:1000;
 }
-.sidebar h2 {
-    margin-bottom: 20px;
-    font-size: 22px;
-}
+.sidebar h2 { margin-bottom:20px; font-size:22px; }
 .sidebar button {
-    background: none;
-    border: none;
-    color: white;
-    text-align: left;
-    padding: 12px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-    margin-bottom: 5px;
+    background:none; border:none; color:white;
+    text-align:left; padding:12px; cursor:pointer;
+    font-size:16px; border-radius:4px; margin-bottom:5px;
 }
-.sidebar button:hover {
-    background-color: #444;
-}
+.sidebar button:hover { background-color:#444; }
 
-/* Main content */
-.main {
-    flex: 1;
-    margin-left: 240px; /* sidebar ke liye space */
-    padding: 20px;
-    overflow-y: auto;
-    background: transparent; /* bg.png clearly visible */
-}
+.main { flex:1; margin-left:240px; padding:20px; overflow-y:auto; background:transparent; }
 
-/* Match card */
 .match-card {
-    background: rgba(255,255,255,0.85); /* semi-transparent card */
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    background: rgba(255,255,255,0.85);
+    padding:15px; margin-bottom:15px;
+    border-radius:8px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.2);
 }
-.match-card h3 {
-    margin: 0 0 8px 0;
-}
-.match-card p {
-    margin: 4px 0;
-}
+.match-card h3 { margin:0 0 8px 0; }
+.match-card p { margin:4px 0; }
 .match-card button {
-    padding: 8px 12px;
-    margin-top: 10px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
+    padding:8px 12px; margin-top:10px; cursor:pointer;
+    background-color:#007bff; color:white; border:none; border-radius:4px;
 }
-.match-card button:hover {
-    background-color: #0056b3;
-}
+.match-card button:hover { background-color:#0056b3; }
 
-#contactInfo {
-    display: none;
-}
+#contactInfo { display:none; }
 </style>
 </head>
 <body>
 
 <div class="container">
 
-    <!-- Sidebar -->
     <div class="sidebar">
         <h2>Dashboard</h2>
         <button id="allMatchesBtn">All Matches</button>
@@ -112,7 +71,6 @@ body {
         <button id="logoutBtn" style="margin-top:auto;">Logout</button>
     </div>
 
-    <!-- Main Content -->
     <div class="main">
         <div id="allMatchesSection">
             <h2>All Matches</h2>
