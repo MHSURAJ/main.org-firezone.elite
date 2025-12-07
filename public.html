@@ -9,11 +9,13 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="firebase.js"></script>
 <style>
+/* Body and background */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: url('assets/bg.png') no-repeat center center fixed; /* replace with your bg image */
+    background: url('assets/bg.png') no-repeat center center fixed; /* apni bg image ka path yaha */
     background-size: cover;
+    color: #222; /* default text color for readability */
     overflow-x: hidden;
 }
 
@@ -25,7 +27,7 @@ body {
 /* Sidebar */
 .sidebar {
     width: 220px;
-    background-color: rgba(34,34,34,0.95);
+    background-color: rgba(34,34,34,0.95); /* dark but semi-transparent */
     color: white;
     display: flex;
     flex-direction: column;
@@ -59,14 +61,15 @@ body {
 /* Main content */
 .main {
     flex: 1;
-    margin-left: 240px; /* space for sidebar */
+    margin-left: 240px; /* sidebar ke liye space */
     padding: 20px;
     overflow-y: auto;
+    background: transparent; /* transparent to show bg image */
 }
 
 /* Match card */
 .match-card {
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.85); /* semi-transparent so bg visible */
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 8px;
