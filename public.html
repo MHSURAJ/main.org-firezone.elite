@@ -13,9 +13,9 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: url('assets/bg.png') no-repeat center center fixed; /* apni bg image ka path yaha */
+    background: url('assets/bg.png') no-repeat center center fixed; /* bg.png directly use ho raha */
     background-size: cover;
-    color: #222; /* default text color for readability */
+    color: #222; /* text readable */
     overflow-x: hidden;
 }
 
@@ -27,12 +27,12 @@ body {
 /* Sidebar */
 .sidebar {
     width: 220px;
-    background-color: rgba(34,34,34,0.95); /* dark but semi-transparent */
+    background-color: rgba(34,34,34,0.95); /* semi-transparent dark */
     color: white;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    position: fixed; /* left fixed */
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
@@ -64,12 +64,12 @@ body {
     margin-left: 240px; /* sidebar ke liye space */
     padding: 20px;
     overflow-y: auto;
-    background: transparent; /* transparent to show bg image */
+    background: transparent; /* bg.png clearly visible */
 }
 
 /* Match card */
 .match-card {
-    background: rgba(255,255,255,0.85); /* semi-transparent so bg visible */
+    background: rgba(255,255,255,0.85); /* semi-transparent card */
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 8px;
