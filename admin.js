@@ -1,45 +1,45 @@
-let editingIndex = null;
+let editIndex = null;
 
+// Switch sections
 function showSection(id) {
   document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
   document.getElementById(id).style.display = "block";
 }
 
-// Popup open
-function openMatchPopup(editIndex = null) {
-  editingIndex = editIndex;
+// Open popup
+function openPopup(i = null) {
+  editIndex = i;
 
-  if (editIndex !== null) {
-    const m = JSON.parse(localStorage.getItem("matches"))[editIndex];
+  if (i !== null) {
+    const m = JSON.parse(localStorage.getItem("matches"))[i];
 
-    document.getElementById("popupTitle").innerText = "Edit Match";
-    document.getElementById("matchName").value = m.name;
-    document.getElementById("matchId").value = m.matchId;
-    document.getElementById("entryFee").value = m.entryFee;
-    document.getElementById("prize").value = m.prize;
-    document.getElementById("date").value = m.date;
-    document.getElementById("time").value = m.time;
-    document.getElementById("roomId").value = m.roomId;
-    document.getElementById("password").value = m.password;
-
+    popupTitle.innerText = "Edit Match";
+    matchName.value = m.name;
+    matchId.value = m.matchId;
+    entryFee.value = m.entryFee;
+    prize.value = m.prize;
+    date.value = m.date;
+    time.value = m.time;
+    roomId.value = m.roomId;
+    password.value = m.password;
   } else {
-    document.getElementById("popupTitle").innerText = "Add Match";
-    document.querySelectorAll(".popup input").forEach(inp => inp.value = "");
+    popupTitle.innerText = "Add Match";
+    document.querySelectorAll(".popup input").forEach(i => i.value = "");
   }
 
-  document.getElementById("popupOverlay").style.display = "flex";
+  popupOverlay.style.display = "flex";
 }
 
 // Close popup
 function closePopup() {
-  document.getElementById("popupOverlay").style.display = "none";
+  popupOverlay.style.display = "none";
 }
 
-// Save or Update match
+// Save Match (Add + Edit)
 function saveMatch() {
   let matches = JSON.parse(localStorage.getItem("matches")) || [];
 
-  const newMatch = {
+  const obj = {
     name: matchName.value,
     matchId: matchId.value,
     entryFee: entryFee.value,
@@ -50,10 +50,10 @@ function saveMatch() {
     password: password.value
   };
 
-  if (editingIndex !== null) {
-    matches[editingIndex] = newMatch;
+  if (editIndex !== null) {
+    matches[editIndex] = obj;
   } else {
-    matches.push(newMatch);
+    matches.push(obj);
   }
 
   localStorage.setItem("matches", JSON.stringify(matches));
@@ -61,32 +61,7 @@ function saveMatch() {
   closePopup();
 }
 
-// Load match cards
-function loadMatches() {
-  let matches = JSON.parse(localStorage.getItem("matches")) || [];
-  let box = document.getElementById("matchList");
-
-  box.innerHTML = "";
-
-  matches.forEach((m, i) => {
-    box.innerHTML += `
-      <div class="match-card">
-        <h3>${m.name}</h3>
-        <p><b>Match ID:</b> ${m.matchId}</p>
-        <p><b>Entry Fee:</b> ${m.entryFee}</p>
-        <p><b>Prize:</b> ${m.prize}</p>
-        <p><b>Date:</b> ${m.date}</p>
-        <p><b>Time:</b> ${m.time}</p>
-
-        <div class="card-btns">
-          <button class="edit-btn" onclick="openMatchPopup(${i})">Edit</button>
-          <button class="delete-btn" onclick="deleteMatch(${i})">Delete</button>
-        </div>
-      </div>
-    `;
-  });
-}
-
+// Delete match
 function deleteMatch(i) {
   let matches = JSON.parse(localStorage.getItem("matches")) || [];
   matches.splice(i, 1);
@@ -94,4 +69,29 @@ function deleteMatch(i) {
   loadMatches();
 }
 
+// Load all matches
+function loadMatches() {
+  let matches = JSON.parse(localStorage.getItem("matches")) || [];
+  matchList.innerHTML = "";
+
+  matches.forEach((m, i) => {
+    matchList.innerHTML += `
+      <div class="match-card">
+        <h3>${m.name}</h3>
+        <p><b>ID:</b> ${m.matchId}</p>
+        <p><b>Fee:</b> ${m.entryFee}</p>
+        <p><b>Prize:</b> ${m.prize}</p>
+        <p><b>Date:</b> ${m.date}</p>
+        <p><b>Time:</b> ${m.time}</p>
+        
+        <div class="card-btns">
+          <button class="edit-btn" onclick="openPopup(${i})">Edit</button>
+          <button class="delete-btn" onclick="deleteMatch(${i})">Delete</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+// Initialize
 window.onload = loadMatches;
