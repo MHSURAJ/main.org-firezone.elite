@@ -12,6 +12,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background: #f4f4f4;
 }
 .container {
     display: flex;
@@ -29,15 +30,18 @@ body {
 }
 .sidebar h2 {
     margin-bottom: 20px;
+    font-size: 22px;
 }
 .sidebar button {
     background: none;
     border: none;
     color: white;
     text-align: left;
-    padding: 10px;
+    padding: 12px;
     cursor: pointer;
     font-size: 16px;
+    border-radius: 4px;
+    margin-bottom: 5px;
 }
 .sidebar button:hover {
     background-color: #444;
@@ -49,9 +53,34 @@ body {
     padding: 20px;
     overflow-y: auto;
 }
-#matchesList li {
-    margin-bottom: 10px;
+
+/* Match card */
+.match-card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
+.match-card h3 {
+    margin: 0 0 8px 0;
+}
+.match-card p {
+    margin: 4px 0;
+}
+.match-card button {
+    padding: 8px 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+.match-card button:hover {
+    background-color: #0056b3;
+}
+
 #contactInfo {
     display: none;
 }
@@ -74,12 +103,12 @@ body {
     <div class="main">
         <div id="allMatchesSection">
             <h2>All Matches</h2>
-            <ul id="matchesList"></ul>
+            <div id="matchesList"></div>
         </div>
 
         <div id="myMatchesSection" style="display:none;">
             <h2>My Matches</h2>
-            <ul id="myMatchesList"></ul>
+            <div id="myMatchesList"></div>
         </div>
 
         <div id="contactInfo" style="display:none;">
