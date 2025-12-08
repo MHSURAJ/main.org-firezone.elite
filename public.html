@@ -1,47 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FireZone Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="firebase.js"></script>
-  <script src="public.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Public Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="firebase.js"></script>
+<script src="public.js" defer></script>
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="logo"><h2>FireZone</h2></div>
-    <ul class="nav-links">
-      <li data-section="upcomingMatches" class="active">Upcoming Matches</li>
-      <li data-section="myMatches">My Matches</li>
-      <li data-section="contactUs">Contact Us</li>
-    </ul>
-    <div class="logout">
-      <button id="logoutBtn">Logout</button>
-    </div>
+
+<div class="sidebar">
+  <h2>FireZone Dashboard</h2>
+  <ul>
+    <li onclick="showSection('upcomingMatches')">Upcoming Matches</li>
+    <li onclick="showSection('myMatches')">My Matches</li>
+    <li onclick="showSection('contactUs')">Contact Us</li>
+  </ul>
+  <button id="logoutBtn">Logout</button>
+</div>
+
+<div class="main">
+  <div id="upcomingMatches" class="section">
+    <h2>Upcoming Matches</h2>
+    <div id="matchesList"></div>
   </div>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <section id="upcomingMatches" class="section active">
-      <h1>Upcoming Matches</h1>
-      <div class="cards" id="matchesList"></div>
-    </section>
-
-    <section id="myMatches" class="section">
-      <h1>My Matches</h1>
-      <div class="cards" id="myMatchesList"></div>
-    </section>
-
-    <section id="contactUs" class="section">
-      <h1>Contact Us</h1>
-      <div class="contact-card">
-        <p>Email us at: <a href="mailto:firezone-support1@gmail.com">firezone-support1@gmail.com</a></p>
-      </div>
-    </section>
+  <div id="myMatches" class="section" style="display:none;">
+    <h2>My Matches</h2>
+    <div id="myMatchesList"></div>
   </div>
+
+  <div id="contactUs" class="section" style="display:none;">
+    <h2>Contact Us</h2>
+    <p>Email: <b>firezone-support1@gmail.com</b></p>
+  </div>
+</div>
+
 </body>
 </html>
