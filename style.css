@@ -1,112 +1,168 @@
+/* Global */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: url('bg.png') no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
-    min-height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #141e30, #243b55);
+  color: #fff;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* Container for sidebar + main content */
-.container {
-    width: 95%;
-    max-width: 1200px;
-    margin: 20px auto;
-    display: flex;
-    gap: 20px;
-}
-
-/* Sidebar / Dashboard */
+/* Sidebar */
 .sidebar {
-    width: 250px;
-    background: rgba(0,0,0,0.7);
-    padding: 15px;
-    border-radius: 10px;
-    flex-shrink: 0;
+  width: 250px;
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
 }
 
-.sidebar h2 {
-    margin-top: 0;
-    text-align: center;
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.sidebar ul {
-    list-style: none;
-    padding: 0;
+.sidebar .logo h2 {
+  font-size: 24px;
+  color: #28a745;
 }
 
-.sidebar ul li {
-    margin: 15px 0;
+.sidebar .nav-links {
+  list-style: none;
+  padding: 0;
 }
 
-.sidebar ul li a, .sidebar ul li button {
-    color: #fff;
-    text-decoration: none;
-    background: none;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
+.sidebar .nav-links li {
+  padding: 15px 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  font-weight: bold;
 }
 
-.sidebar ul li button:hover, .sidebar ul li a:hover {
-    color: #28a745;
+.sidebar .nav-links li.active,
+.sidebar .nav-links li:hover {
+  background: rgba(255,255,255,0.1);
+  border-left: 5px solid #28a745;
 }
 
-/* Main Content */
+/* Logout */
+.sidebar .logout {
+  text-align: center;
+}
+
+.sidebar #logoutBtn {
+  padding: 10px 20px;
+  background: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.sidebar #logoutBtn:hover {
+  background: #218838;
+}
+
+/* Main content */
 .main-content {
-    flex-grow: 1;
+  flex-grow: 1;
+  padding: 30px;
+  overflow-y: auto;
+  background: rgba(0,0,0,0.2);
 }
 
-/* Headings */
-h1, h2 {
-    margin-bottom: 15px;
-    text-align: center;
+/* Sections */
+.section {
+  display: none;
+  animation: fadeIn 0.5s ease;
 }
 
-/* Matches & Contact sections */
-#upcomingMatches, #contactUs {
-    background: rgba(0,0,0,0.5);
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 10px;
+.section.active {
+  display: block;
 }
 
-/* Contact form inputs */
-#contactUs input, #contactUs textarea {
-    display: block;
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.cards .card {
+  background: rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.cards .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.5);
+}
+
+/* Contact Card */
+.contact-card {
+  background: rgba(255,255,255,0.1);
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.contact-card input, .contact-card textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
+}
+
+.contact-card button {
+  background: #28a745;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.contact-card button:hover {
+  background: #218838;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  body {
+    flex-direction: column;
+  }
+  .sidebar {
     width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-}
-
-/* Buttons */
-#contactUs button, #logoutBtn {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+  .sidebar .nav-links {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .sidebar .nav-links li {
+    border-left: none;
     padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    margin: 10px 0;
-    background-color: #28a745;
-    color: #fff;
-    font-weight: bold;
-}
-
-#contactUs button:hover, #logoutBtn:hover {
-    background-color: #218838;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 800px){
-    .container {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: 100%;
-        margin-bottom: 20px;
-    }
+  }
+  .main-content {
+    padding: 20px;
+  }
 }
