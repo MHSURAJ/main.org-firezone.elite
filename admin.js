@@ -1,9 +1,7 @@
 let editKey = null;
 
-// Firebase reference
 const matchesRef = firebase.database().ref('matches');
 
-// DOM elements
 const popupOverlay = document.getElementById('popupOverlay');
 const popupTitle = document.getElementById('popupTitle');
 const matchName = document.getElementById('matchName');
@@ -15,42 +13,51 @@ const time = document.getElementById('time');
 const roomId = document.getElementById('roomId');
 const password = document.getElementById('password');
 const matchList = document.getElementById('matchList');
+const logoutBtn = document.getElementById('logoutBtn');
+
+logoutBtn.addEventListener('click', ()=>{
+  firebase.auth().signOut().then(()=>{
+    localStorage.removeItem('loggedInUser');
+    localStorage.removeItem('userType');
+    alert("Logged out successfully!");
+    window.location.href = "login.html";
+  }).catch(err=>{
+    console.error(err);
+    alert("Logout failed: " + err.message);
+  });
+});
 
 // Switch sections
-function showSection(id) {
-  document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
-  document.getElementById(id).style.display = "block";
-  if (id === "players") loadPendingPlayers();
+function showSection(id){
+  document.querySelectorAll(".section").forEach(sec=>sec.style.display="none");
+  document.getElementById(id).style.display="block";
+  if(id==='players') loadPendingPlayers();
 }
 
-// Open popup
-function openPopup(key = null, match = null) {
-  editKey = key;
+// Popup
+function openPopup(key=null, match=null){
+  editKey=key;
   if(key && match){
-    popupTitle.innerText = "Edit Match";
-    matchName.value = match.name;
-    matchId.value = match.matchId;
-    entryFee.value = match.entryFee;
-    prize.value = match.prize;
-    date.value = match.date;
-    time.value = match.time;
-    roomId.value = match.roomId;
-    password.value = match.password;
+    popupTitle.innerText="Edit Match";
+    matchName.value=match.name;
+    matchId.value=match.matchId;
+    entryFee.value=match.entryFee;
+    prize.value=match.prize;
+    date.value=match.date;
+    time.value=match.time;
+    roomId.value=match.roomId;
+    password.value=match.password;
   } else {
-    popupTitle.innerText = "Add Match";
-    document.querySelectorAll(".popup input").forEach(i => i.value = "");
+    popupTitle.innerText="Add Match";
+    document.querySelectorAll(".popup input").forEach(i=>i.value="");
   }
-  popupOverlay.style.display = "flex";
+  popupOverlay.style.display="flex";
 }
+function closePopup(){popupOverlay.style.display="none";}
 
-// Close popup
-function closePopup() {
-  popupOverlay.style.display = "none";
-}
-
-// Save Match (Add / Edit)
-function saveMatch() {
-  const obj = {
+// Save match
+function saveMatch(){
+  const obj={
     name: matchName.value,
     matchId: matchId.value,
     entryFee: entryFee.value,
@@ -60,32 +67,25 @@ function saveMatch() {
     roomId: roomId.value,
     password: password.value
   };
-
-  if(editKey){ // Edit
-    matchesRef.child(editKey).update(obj);
-  } else { // Add
-    matchesRef.push(obj);
-  }
-
+  if(editKey) matchesRef.child(editKey).update(obj);
+  else matchesRef.push(obj);
   closePopup();
 }
 
-// Delete Match
+// Delete match
 function deleteMatch(key){
-  if(confirm("Delete this match?")){
-    matchesRef.child(key).remove();
-  }
+  if(confirm("Delete this match?")) matchesRef.child(key).remove();
 }
 
-// Load Matches from Firebase
+// Load matches realtime
 matchesRef.on('value', snapshot=>{
-  matchList.innerHTML = '';
+  matchList.innerHTML='';
   const data = snapshot.val();
   if(data){
     Object.entries(data).forEach(([key, m])=>{
-      const div = document.createElement('div');
+      const div=document.createElement('div');
       div.classList.add('match-card');
-      div.innerHTML = `
+      div.innerHTML=`
         <h3>${m.name}</h3>
         <p><b>ID:</b> ${m.matchId}</p>
         <p><b>Fee:</b> ${m.entryFee}</p>
@@ -98,61 +98,50 @@ matchesRef.on('value', snapshot=>{
         </div>
       `;
       matchList.appendChild(div);
-
-      div.querySelector('.edit-btn').addEventListener('click', ()=> openPopup(key, m));
-      div.querySelector('.delete-btn').addEventListener('click', ()=> deleteMatch(key));
+      div.querySelector('.edit-btn').addEventListener('click', ()=>openPopup(key,m));
+      div.querySelector('.delete-btn').addEventListener('click', ()=>deleteMatch(key));
     });
-  } else {
-    matchList.innerHTML = "<p>No matches added yet.</p>";
-  }
+  } else matchList.innerHTML="<p>No matches added yet.</p>";
 });
 
-// =========================
-// PENDING PLAYERS (same localStorage logic)
-function loadPendingPlayers() {
-  let approvals = JSON.parse(localStorage.getItem("approvals")) || {};
-  let playerList = document.getElementById("playerList");
-
-  playerList.innerHTML = "";
-  let hasPending = false;
-
-  for (let email in approvals) {
-    if (approvals[email].startsWith("pending_")) {
-      let matchId = approvals[email].replace("pending_", "");
-      hasPending = true;
-
-      playerList.innerHTML += `
+// Pending players (localStorage logic)
+function loadPendingPlayers(){
+  let approvals=JSON.parse(localStorage.getItem("approvals"))||{};
+  let playerList=document.getElementById("playerList");
+  playerList.innerHTML="";
+  let hasPending=false;
+  for(let email in approvals){
+    if(approvals[email].startsWith("pending_")){
+      let matchId=approvals[email].replace("pending_","");
+      hasPending=true;
+      playerList.innerHTML+=`
         <div class="match-card">
           <h3>${email}</h3>
           <p>Match ID: <b>${matchId}</b></p>
           <p>Status: <b>Pending</b></p>
-
           <button style="background:green;color:white;padding:7px;border:none;border-radius:5px;"
             onclick="approvePlayer('${email}')">Approve</button>
-
           <button style="background:red;color:white;padding:7px;border:none;border-radius:5px;margin-left:5px;"
             onclick="rejectPlayer('${email}')">Reject</button>
-        </div>
-      `;
+        </div>`;
     }
   }
-
-  if(!hasPending) playerList.innerHTML = "<p>No pending approval requests.</p>";
+  if(!hasPending) playerList.innerHTML="<p>No pending approval requests.</p>";
 }
 
-function approvePlayer(email) {
-  let approvals = JSON.parse(localStorage.getItem("approvals")) || {};
-  let matchId = approvals[email].split("_")[1];
-  approvals[email] = "approved_" + matchId;
-  localStorage.setItem("approvals", JSON.stringify(approvals));
-  alert(email + " approved!");
+function approvePlayer(email){
+  let approvals=JSON.parse(localStorage.getItem("approvals"))||{};
+  let matchId=approvals[email].split("_")[1];
+  approvals[email]="approved_"+matchId;
+  localStorage.setItem("approvals",JSON.stringify(approvals));
+  alert(email+" approved!");
   loadPendingPlayers();
 }
 
-function rejectPlayer(email) {
-  let approvals = JSON.parse(localStorage.getItem("approvals")) || {};
+function rejectPlayer(email){
+  let approvals=JSON.parse(localStorage.getItem("approvals"))||{};
   delete approvals[email];
-  localStorage.setItem("approvals", JSON.stringify(approvals));
-  alert(email + " rejected!");
+  localStorage.setItem("approvals",JSON.stringify(approvals));
+  alert(email+" rejected!");
   loadPendingPlayers();
 }
