@@ -5,18 +5,58 @@ body {
     background-size: cover;
     color: #fff;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;  /* horizontal center */
-    align-items: center;      /* vertical center */
 }
 
+/* Container for sidebar + main content */
 .container {
-    width: 90%;
-    max-width: 800px;
-    padding: 20px;
-    background: rgba(0,0,0,0.6); /* semi-transparent bg */
+    width: 95%;
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    gap: 20px;
+}
+
+/* Sidebar / Dashboard */
+.sidebar {
+    width: 250px;
+    background: rgba(0,0,0,0.7);
+    padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a, .sidebar ul li button {
+    color: #fff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.sidebar ul li button:hover, .sidebar ul li a:hover {
+    color: #28a745;
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
 }
 
 /* Headings */
@@ -50,7 +90,7 @@ h1, h2 {
     border-radius: 5px;
     cursor: pointer;
     display: block;
-    margin: 10px auto 0;
+    margin: 10px 0;
     background-color: #28a745;
     color: #fff;
     font-weight: bold;
@@ -61,11 +101,12 @@ h1, h2 {
 }
 
 /* Mobile responsiveness */
-@media (max-width: 600px){
-    #contactUs input, #contactUs textarea {
-        font-size: 14px;
+@media (max-width: 800px){
+    .container {
+        flex-direction: column;
     }
-    #contactUs button, #logoutBtn {
+    .sidebar {
         width: 100%;
+        margin-bottom: 20px;
     }
 }
