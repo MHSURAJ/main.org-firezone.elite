@@ -16,8 +16,9 @@ function loadMatches() {
   let matches = JSON.parse(localStorage.getItem("matches")) || [];
   let approvals = JSON.parse(localStorage.getItem("approvals")) || {};
 
-  let allMatches = document.getElementById("allMatches");
-  let myMatchesList = document.getElementById("myMatches");
+  // FIXED IDs 🎯
+  let allMatches = document.getElementById("matchesList");
+  let myMatchesList = document.getElementById("myMatchesList");
 
   allMatches.innerHTML = "";
   myMatchesList.innerHTML = "";
@@ -60,9 +61,7 @@ function loadMatches() {
 
     allMatches.appendChild(card);
 
-    // ==========================
-    //      MY APPROVED MATCHES
-    // ==========================
+    // MY APPROVED MATCHES (Room ID + Password)
     if (approvals[userEmail] === "approved_" + m.matchId) {
       let myCard = document.createElement("div");
       myCard.className = "match-card";
